@@ -1,7 +1,7 @@
 {
-  "name": "feedback-concierge-pathway",
+  "name": "live-feedback-concierge",
   "version": "1.0.0",
-  "description": "A multi-step feedback collection pathway.",
+  "description": "A conversational multi-step feedback pathway powered by AI.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,5 +9,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {}
+  "dependencies": {
+    "node-fetch": "^2.6.1"
+  }
 }
