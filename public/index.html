@@ -8,13 +8,135 @@
 </head>
 <body>
     <div class="concierge-container">
+
+        <!-- Progress Bar -->
         <div id="progress-bar" class="progress-bar">Step 1 of 3</div>
 
-        <!-- The "chat-body" will now hold all our dynamic content -->
-        <div id="chat-body" class="chat-body"></div>
+        <!-- Screen 1: Instant Pulse Check -->
+        <div id="screen-1" class="screen active">
+            <div class="concierge-header">
+                <p class="screen-title">Screen 1: The Concierge's Instant Pulse Check</p>
+                <h1>How was your experience today at Café Aroma?</h1>
+            </div>
+            <div class="concierge-bubble">
+                <span class="smiley">🙂</span>
+                <p>Quickly tell us how we did – it helps us improve!</p>
+            </div>
+            <div class="star-rating-container">
+                <div class="star-group" data-rating="1">
+                    <span class="star" data-value="1">☆</span>
+                    <span class="label">Terrible</span>
+                </div>
+                <div class="star-group" data-rating="2">
+                    <span class="star" data-value="2">☆</span>
+                    <span class="label">Poor</span>
+                </div>
+                <div class="star-group" data-rating="3">
+                    <span class="star" data-value="3">☆</span>
+                    <span class="label">Okay</span>
+                </div>
+                <div class="star-group" data-rating="4">
+                    <span class="star" data-value="4">☆</span>
+                    <span class="label">Good</span>
+                </div>
+                <div class="star-group" data-rating="5">
+                    <span class="star" data-value="5">☆</span>
+                    <span class="label">Excellent</span>
+                </div>
+            </div>
+        </div>
 
-        <!-- The "input-area" will hold the dynamic user controls -->
-        <div id="input-area" class="input-area"></div>
+        <!-- Screen 2: Positive Follow-Up -->
+        <div id="screen-2-positive" class="screen">
+            <div class="concierge-header">
+                <h1>Fantastic! What made it so great?</h1>
+            </div>
+            <div class="concierge-bubble">
+                <span class="smiley">🙂</span>
+                <p>We love hearing this! Tell us a quick highlight – it helps us know what we're doing right!</p>
+            </div>
+            <textarea class="feedback-textarea" placeholder="Share your highlight here... e.g., The amazing coffee, my friendly server..."></textarea>
+            <button class="continue-button">Continue</button>
+        </div>
+
+        <!-- Screen 2: Negative Follow-Up -->
+        <div id="screen-2-negative" class="screen">
+             <div class="concierge-header">
+                <h1>Oh no! We're so sorry to hear that.</h1>
+            </div>
+            <div class="concierge-bubble">
+                <span class="smiley">😟</span>
+                <p>Your feedback is crucial. Please tell us a bit more about what went wrong so we can make it right.</p>
+            </div>
+            <textarea class="feedback-textarea" placeholder="Tell us what happened... e.g., My order was incorrect, service was slow..."></textarea>
+            <button class="continue-button">Continue</button>
+        </div>
+
+        <!-- Screen 3: Celebration Pathway -->
+        <div id="screen-3-positive" class="screen screen-final">
+            <div class="concierge-header">
+                <h1>That's wonderful to hear!</h1>
+                <p>It sounds like you had a fantastic experience! We'd love to help you celebrate that and share the good news.</p>
+            </div>
+            <div class="pathway-menu">
+                <a href="#" class="pathway-option recommended">
+                    <div class="icon">G</div>
+                    <div class="text">
+                        <strong>Share your story with other customers</strong>
+                        <span>Help others discover us by sharing your feedback on Google.</span>
+                    </div>
+                </a>
+                <a href="#" class="pathway-option">
+                    <div class="icon">⭐</div>
+                    <div class="text">
+                        <strong>Give a direct "shout-out" to a team member</strong>
+                        <span>Send a special thanks directly to someone who made your day.</span>
+                    </div>
+                </a>
+                <a href="#" class="pathway-option">
+                    <div class="icon">🏷️</div>
+                    <div class="text">
+                        <strong>Get exclusive perks for your next visit</strong>
+                        <span>Join our loyalty program for special offers and rewards.</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Screen 3: Resolution Pathway -->
+        <div id="screen-3-negative" class="screen screen-final">
+            <div class="concierge-header">
+                <h1>We're truly sorry to hear this.</h1>
+                <p>It sounds like we fell short of your expectations. We want to make things right for you immediately.</p>
+            </div>
+            <div class="pathway-menu">
+                 <a href="#" class="pathway-option recommended">
+                    <div class="icon">💬</div>
+                    <div class="text">
+                        <strong>Request immediate assistance from our support team</strong>
+                        <span>Connect directly with a team member for a quick resolution.</span>
+                    </div>
+                </a>
+                <a href="#" class="pathway-option">
+                    <div class="icon">🗓️</div>
+                    <div class="text">
+                        <strong>Schedule a call-back from a manager</strong>
+                        <span>Pick a time for a manager to discuss your experience personally.</span>
+                    </div>
+                </a>
+                <a href="#" class="pathway-option">
+                    <div class="icon">🔄</div>
+                    <div class="text">
+                        <strong>Start a return or refund process</strong>
+                        <span>Direct link to our self-service page or a dedicated form.</span>
+                    </div>
+                </a>
+            </div>
+             <a href="#" class="subtle-link">
+                Would you still prefer to log your experience as a public review? Your feedback matters wherever you share it.
+             </a>
+        </div>
+
     </div>
     <script src="script.js"></script>
 </body>
