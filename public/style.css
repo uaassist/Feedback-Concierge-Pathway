@@ -1,0 +1,231 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+
+:root {
+    --primary-color: #E99A3B; /* Orange from the images */
+    --background-light: #FFF;
+    --background-medium: #F7F7F7;
+    --border-color: #EAEAEA;
+    --text-dark: #212121;
+    --text-light: #666666;
+    --star-inactive: #D8D8D8;
+    --star-active: #F5A623; /* A slightly different orange for stars */
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #E5E7EB;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: var(--text-dark);
+}
+
+.concierge-container {
+    position: relative;
+    max-width: 420px;
+    width: 100%;
+    height: 85vh;
+    max-height: 800px;
+    background-color: var(--background-light);
+    border-radius: 24px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* --- Progress Bar --- */
+.progress-bar {
+    text-align: center;
+    padding: 16px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--primary-color);
+    border-bottom: 1px solid var(--border-color);
+    background-color: var(--background-light);
+}
+.progress-bar::after {
+    content: '';
+    display: block;
+    width: 33.33%;
+    height: 2px;
+    background-color: var(--primary-color);
+    margin: 8px auto 0;
+    transition: width 0.4s ease-in-out;
+}
+.progress-bar.step-2::after { width: 66.66%; }
+.progress-bar.step-3::after { width: 100%; }
+
+
+/* --- Screen Management --- */
+.screen {
+    display: none;
+    flex-direction: column;
+    padding: 24px;
+    overflow-y: auto;
+    flex: 1;
+    animation: fadeIn 0.5s ease-in-out;
+}
+.screen.active {
+    display: flex;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.screen-final {
+    background-color: var(--background-medium);
+}
+#screen-3-positive.screen-final {
+    background-image: url('data:image/svg+xml;utf8,<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><text x="10" y="30" font-size="20" fill="gray" opacity="0.2">🎉</text><text x="90%" y="80" font-size="20" fill="gray" opacity="0.2">🎊</text><text x="50%" y="50%" font-size="20" fill="gray" opacity="0.2">✨</text></svg>');
+}
+
+
+/* --- General Elements --- */
+.concierge-header {
+    text-align: center;
+    margin-bottom: 24px;
+}
+.concierge-header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0 0 8px 0;
+}
+.concierge-header p {
+    margin: 0;
+    color: var(--text-light);
+    line-height: 1.6;
+}
+.concierge-header .screen-title {
+    font-size: 14px;
+    color: var(--primary-color);
+    margin-bottom: 16px;
+}
+.concierge-bubble {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background-color: var(--background-medium);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 32px;
+}
+.concierge-bubble .smiley { font-size: 24px; }
+.concierge-bubble p { margin: 0; font-weight: 500; }
+
+/* --- Star Rating (Screen 1) --- */
+.star-rating-container {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+}
+.star-group { cursor: pointer; }
+.star {
+    font-size: 40px;
+    color: var(--star-inactive);
+    transition: color 0.2s, transform 0.2s;
+}
+.label {
+    display: block;
+    margin-top: 8px;
+    color: var(--text-light);
+    font-weight: 500;
+    transition: color 0.2s;
+}
+.star-group:hover .star, .star-group.hovered .star {
+    color: var(--star-active);
+    transform: scale(1.1);
+}
+.star-group:hover .label, .star-group.hovered .label {
+    color: var(--text-dark);
+}
+
+/* --- Follow-Up (Screen 2) --- */
+.feedback-textarea {
+    width: 100%;
+    min-height: 100px;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    resize: vertical;
+    box-sizing: border-box;
+}
+.feedback-textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(233, 154, 59, 0.2);
+}
+.continue-button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 16px;
+    width: 100%;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 24px;
+    transition: background-color 0.2s;
+}
+.continue-button:hover {
+    background-color: #d88c2c;
+}
+
+/* --- Pathway Menu (Screen 3) --- */
+.pathway-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.pathway-option {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    background-color: var(--background-light);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    text-decoration: none;
+    color: var(--text-dark);
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.pathway-option:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+.pathway-option.recommended {
+    border: 2px solid var(--primary-color);
+    background-color: #FFF9F2;
+}
+.pathway-option .icon {
+    font-size: 24px;
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+}
+.pathway-option .text strong {
+    display: block;
+    margin-bottom: 4px;
+}
+.pathway-option .text span {
+    color: var(--text-light);
+    font-size: 14px;
+}
+.subtle-link {
+    text-align: center;
+    margin-top: 24px;
+    color: var(--text-light);
+    font-size: 14px;
+    text-decoration: none;
+}
+.subtle-link:hover {
+    color: var(--primary-color);
+}
