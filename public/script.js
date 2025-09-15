@@ -2,33 +2,35 @@ document.addEventListener('DOMContentLoaded', () => {
     const screens = document.querySelectorAll('.screen');
     const stars = document.querySelectorAll('.star');
     const starRatingArea = document.getElementById('star-rating-area');
-    const messageContainer = document.getElementById('message-container');
+    const messageElement = document.getElementById('concierge-message');
 
     let userRating = 0;
 
     const goToScreen = (screenId) => {
         screens.forEach(screen => screen.classList.remove('active'));
+        // Find and activate the next screen
         document.getElementById(screenId).classList.add('active');
     };
 
-    // --- Typing Animation Functions ---
-    const showTypingIndicator = () => {
-        messageContainer.innerHTML = `<div class="typing-indicator"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>`;
-    };
+    // --- Word-by-Word Typing Animation ---
+    const typeMessageWordByWord = (element, text, onComplete) => {
+        const words = text.split(' ');
+        let wordIndex = 0;
+        element.innerHTML = '<span class="cursor"></span>'; // Start with a cursor
 
-    const typeMessage = (text, onComplete) => {
-        messageContainer.innerHTML = '<p class="typed-text"></p>';
-        const p = messageContainer.querySelector('.typed-text');
-        p.innerHTML = '<span class="cursor"></span>';
-        let i = 0;
-        const typingInterval = setInterval(() => {
-            p.firstChild.textContent += text.charAt(i);
-            i++;
-            if (i === text.length) {
-                clearInterval(typingInterval);
+        const typeWord = () => {
+            if (wordIndex < words.length) {
+                // Remove cursor, add word, add cursor back
+                element.innerHTML = words.slice(0, wordIndex + 1).join(' ') + ' <span class="cursor"></span>';
+                wordIndex++;
+                setTimeout(typeWord, 150); // Delay between each word
+            } else {
+                // Typing finished, remove cursor
+                element.innerHTML = text;
                 if (onComplete) onComplete();
             }
-        }, 40); // Speed of typing
+        };
+        typeWord();
     };
 
     // --- Star Rating Logic ---
@@ -40,40 +42,31 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        star.addEventListener('mouseout', () => {
-            stars.forEach(s => s.classList.remove('hovered'));
-        });
+        star.addEventListener('mouseout', () => stars.forEach(s => s.classList.remove('hovered')));
 
         star.addEventListener('click', () => {
             userRating = parseInt(star.dataset.value);
             stars.forEach(s => {
                 s.classList.toggle('selected', parseInt(s.dataset.value) <= userRating);
             });
-
-            setTimeout(() => {
-                if (userRating >= 4) {
-                    goToScreen('screen-2-positive');
-                } else {
-                    goToScreen('screen-2-negative');
-                }
-            }, 400);
+            // In a real app you would now move to the next screen
+            // Example: setTimeout(() => goToScreen('screen-2'), 400);
         });
     });
 
     // --- Initial Pathway Flow ---
     const startConciergeFlow = () => {
         goToScreen('screen-1');
-        showTypingIndicator();
 
-        // 1. Simulate "thinking"
+        const welcomeMessage = "Hi! I'm Alex, your digital concierge. Your feedback helps us improve.";
+
+        // Start typing after a brief delay
         setTimeout(() => {
-            // 2. Start typing the message
-            const welcomeMessage = "Hi! I'm Alex, your digital concierge. Your feedback helps us improve.";
-            typeMessage(welcomeMessage, () => {
-                // 3. Reveal the star rating after typing is complete
+            typeMessageWordByWord(messageElement, welcomeMessage, () => {
+                // Reveal the star rating after typing is complete
                 starRatingArea.classList.remove('hidden');
             });
-        }, 1200); // Wait 1.2s before typing
+        }, 500);
     };
 
     startConciergeFlow();
