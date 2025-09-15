@@ -6,6 +6,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let userRating = 0;
 
+    // --- Function to switch screens ---
+    const goToScreen = (screenId) => {
+        screens.forEach(screen => screen.classList.remove('active'));
+        const nextScreen = document.getElementById(screenId);
+        if (nextScreen) {
+            nextScreen.classList.add('active');
+        }
+    };
+
     // --- Word-by-Word Typing Animation ---
     const typeMessageWordByWord = (element, text, onComplete) => {
         const words = text.split(' ');
@@ -16,23 +25,21 @@ document.addEventListener('DOMContentLoaded', () => {
             if (wordIndex < words.length) {
                 element.innerHTML = words.slice(0, wordIndex + 1).join(' ') + ' <span class="cursor"></span>';
                 wordIndex++;
-                setTimeout(typeWord, 150); // Delay between each word
+                setTimeout(typeWord, 150);
             } else {
-                element.innerHTML = text; // Typing finished, remove cursor
+                element.innerHTML = text; // Typing finished
                 if (onComplete) onComplete();
             }
         };
         typeWord();
     };
 
-    // --- Star Rating Logic (CORRECTED) ---
-
-    // Function to update the visual state of stars based on a rating
+    // --- Star Rating Logic (with Navigation) ---
     const updateStars = (rating) => {
         stars.forEach(star => {
             const starValue = parseInt(star.dataset.value);
             if (starValue <= rating) {
-                star.classList.add('hovered'); // Use 'hovered' for visual consistency
+                star.classList.add('hovered');
                 star.textContent = '★'; // Filled star
             } else {
                 star.classList.remove('hovered');
@@ -43,45 +50,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
     stars.forEach(star => {
         star.addEventListener('mouseover', () => {
-            const hoverValue = parseInt(star.dataset.value);
-            updateStars(hoverValue); // Preview the rating on hover
+            updateStars(parseInt(star.dataset.value));
         });
 
         star.addEventListener('mouseout', () => {
-            // When mouse leaves, revert to the actual selected rating
             updateStars(userRating);
         });
 
         star.addEventListener('click', () => {
             userRating = parseInt(star.dataset.value);
             
-            // Permanently set the rating and visual state
             stars.forEach(s => {
-                s.classList.remove('selected'); // Clear previous selections first
+                s.classList.remove('selected');
                 if (parseInt(s.dataset.value) <= userRating) {
                     s.classList.add('selected');
                 }
             });
             
-            updateStars(userRating); // Update visuals to match the new rating
+            updateStars(userRating);
 
-            // In a real app, you would now proceed to the next screen.
-            // For example:
-            // setTimeout(() => {
-            //     if (userRating >= 4) {
-            //         // goToScreen('screen-2-positive');
-            //     } else {
-            //         // goToScreen('screen-2-negative');
-            //     }
-            // }, 400);
+            // THIS IS THE CRITICAL FIX: Navigate to the next screen after a short delay
+            setTimeout(() => {
+                if (userRating >= 4) {
+                    // Go to positive feedback screen
+                    goToScreen('screen-2-positive');
+                } else {
+                    // Go to negative/neutral feedback screen
+                    goToScreen('screen-2-negative');
+                }
+            }, 400); // 400ms delay for a smooth transition
         });
     });
 
 
     // --- Initial Pathway Flow ---
     const startConciergeFlow = () => {
-        document.getElementById('screen-1').classList.add('active');
-
+        goToScreen('screen-1'); // Ensure we start on the first screen
         const welcomeMessage = "Hi! I'm Alex, your digital concierge. Your feedback helps us improve.";
 
         setTimeout(() => {
