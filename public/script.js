@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const screens = document.querySelectorAll('.screen');
     const stars = document.querySelectorAll('.star');
     const starRatingArea = document.getElementById('star-rating-area');
+    const messageContainer = document.getElementById('message-container');
 
     let userRating = 0;
 
@@ -10,27 +11,24 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById(screenId).classList.add('active');
     };
 
-    // --- Multi-line Typing Animation ---
-    const typeMultiLineMessage = (elementId, lines, onComplete) => {
-        const element = document.getElementById(elementId);
-        if (!element) return;
+    // --- Typing Animation Functions ---
+    const showTypingIndicator = () => {
+        messageContainer.innerHTML = `<div class="typing-indicator"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>`;
+    };
 
-        let lineIndex = 0;
-        let timeout = 0;
-
-        const typeLine = () => {
-            if (lineIndex < lines.length) {
-                // Add the next line with a delay
-                setTimeout(() => {
-                    element.innerHTML += (lineIndex > 0 ? '<br>' : '') + lines[lineIndex];
-                    lineIndex++;
-                    typeLine();
-                }, 300); // Delay between each line appearing
-            } else if (onComplete) {
-                onComplete();
+    const typeMessage = (text, onComplete) => {
+        messageContainer.innerHTML = '<p class="typed-text"></p>';
+        const p = messageContainer.querySelector('.typed-text');
+        p.innerHTML = '<span class="cursor"></span>';
+        let i = 0;
+        const typingInterval = setInterval(() => {
+            p.firstChild.textContent += text.charAt(i);
+            i++;
+            if (i === text.length) {
+                clearInterval(typingInterval);
+                if (onComplete) onComplete();
             }
-        };
-        typeLine();
+        }, 40); // Speed of typing
     };
 
     // --- Star Rating Logic ---
@@ -52,11 +50,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 s.classList.toggle('selected', parseInt(s.dataset.value) <= userRating);
             });
 
-            // Proceed to the next step after a brief delay
             setTimeout(() => {
-                if (userRating >= 4) { // Positive Path
+                if (userRating >= 4) {
                     goToScreen('screen-2-positive');
-                } else { // Negative or Neutral Path
+                } else {
                     goToScreen('screen-2-negative');
                 }
             }, 400);
@@ -66,16 +63,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Initial Pathway Flow ---
     const startConciergeFlow = () => {
         goToScreen('screen-1');
+        showTypingIndicator();
 
-        const welcomeMessageLines = [
-            "Hi!", "I'm", "Alex,", "your", "digital", "concierge.",
-            "Your", "feedback", "helps", "us", "improve."
-        ];
-
-        // Start typing the message, and when it's done, reveal the stars
-        typeMultiLineMessage('concierge-message', welcomeMessageLines, () => {
-            starRatingArea.classList.remove('hidden');
-        });
+        // 1. Simulate "thinking"
+        setTimeout(() => {
+            // 2. Start typing the message
+            const welcomeMessage = "Hi! I'm Alex, your digital concierge. Your feedback helps us improve.";
+            typeMessage(welcomeMessage, () => {
+                // 3. Reveal the star rating after typing is complete
+                starRatingArea.classList.remove('hidden');
+            });
+        }, 1200); // Wait 1.2s before typing
     };
 
     startConciergeFlow();
