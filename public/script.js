@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const goToScreen = (screenId) => {
         screens.forEach(screen => screen.classList.remove('active'));
-        // Find and activate the next screen
         document.getElementById(screenId).classList.add('active');
     };
 
@@ -20,13 +19,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const typeWord = () => {
             if (wordIndex < words.length) {
-                // Remove cursor, add word, add cursor back
                 element.innerHTML = words.slice(0, wordIndex + 1).join(' ') + ' <span class="cursor"></span>';
                 wordIndex++;
                 setTimeout(typeWord, 150); // Delay between each word
             } else {
-                // Typing finished, remove cursor
-                element.innerHTML = text;
+                element.innerHTML = text; // Typing finished, remove cursor
                 if (onComplete) onComplete();
             }
         };
