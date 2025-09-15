@@ -8,10 +8,9 @@
 </head>
 <body>
     <div class="concierge-wrapper">
-        <!-- This container holds the main content that gets replaced -->
         <div id="concierge-container" class="concierge-container">
 
-            <!-- Screen 1: Instant Pulse Check (Corrected) -->
+            <!-- Screen 1: Instant Pulse Check -->
             <div id="screen-1" class="screen active">
                 <div class="content-area">
                     <div class="concierge-header">
@@ -20,7 +19,9 @@
                     </div>
                     <div class="concierge-bubble">
                         <img src="https://ucarecdn.com/2008f119-a819-4d18-8fb4-1236ca14b8b8/ChatGPTImageMay22202502_03_10PMezgifcomresize.png" alt="Alex the Concierge" class="concierge-avatar">
-                        <p id="concierge-message"></p>
+                        <div id="message-container" class="message-container">
+                            <!-- Typing animation will appear here -->
+                        </div>
                     </div>
                 </div>
                 <div id="star-rating-area" class="star-rating-container hidden">
@@ -37,7 +38,7 @@
                  <div class="content-area">
                     <div class="concierge-header"><h1>Fantastic! What made it so great?</h1></div>
                     <div class="concierge-bubble">
-                         <img src="https://i.imgur.com/xs9q2Y1.png" alt="Alex the Concierge" class="concierge-avatar">
+                         <img src="https://ucarecdn.com/2008f119-a819-4d18-8fb4-1236ca14b8b8/ChatGPTImageMay22202502_03_10PMezgifcomresize.png" alt="Alex the Concierge" class="concierge-avatar">
                         <p>We love hearing this! Tell us a quick highlight – it helps us know what we're doing right!</p>
                     </div>
                     <textarea class="feedback-textarea" placeholder="Share your highlight here..."></textarea>
@@ -50,15 +51,13 @@
                  <div class="content-area">
                     <div class="concierge-header"><h1>Oh no! We're so sorry to hear that.</h1></div>
                     <div class="concierge-bubble">
-                         <img src="https://i.imgur.com/xs9q2Y1.png" alt="Alex the Concierge" class="concierge-avatar">
+                         <img src="https://ucarecdn.com/2008f119-a819-4d18-8fb4-1236ca14b8b8/ChatGPTImageMay22202502_03_10PMezgifcomresize.png" alt="Alex the Concierge" class="concierge-avatar">
                         <p>Your feedback is crucial. Please tell us a bit more about what went wrong so we can make it right.</p>
                     </div>
                     <textarea class="feedback-textarea" placeholder="Tell us what happened..."></textarea>
                 </div>
                 <button class="continue-button">Continue</button>
             </div>
-
-            <!-- NOTE: Screen 3s are omitted for brevity but would follow the same structure -->
 
         </div>
     </div>
