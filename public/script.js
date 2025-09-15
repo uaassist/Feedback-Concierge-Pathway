@@ -6,11 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let userRating = 0;
 
-    const goToScreen = (screenId) => {
-        screens.forEach(screen => screen.classList.remove('active'));
-        document.getElementById(screenId).classList.add('active');
-    };
-
     // --- Word-by-Word Typing Animation ---
     const typeMessageWordByWord = (element, text, onComplete) => {
         const words = text.split(' ');
@@ -46,14 +41,13 @@ document.addEventListener('DOMContentLoaded', () => {
             stars.forEach(s => {
                 s.classList.toggle('selected', parseInt(s.dataset.value) <= userRating);
             });
-            // In a real app you would now move to the next screen
-            // Example: setTimeout(() => goToScreen('screen-2'), 400);
+            // In a real app, you would now proceed to the next screen.
         });
     });
 
     // --- Initial Pathway Flow ---
     const startConciergeFlow = () => {
-        goToScreen('screen-1');
+        document.getElementById('screen-1').classList.add('active');
 
         const welcomeMessage = "Hi! I'm Alex, your digital concierge. Your feedback helps us improve.";
 
