@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const stars = document.querySelectorAll('.star');
     const starRatingArea = document.getElementById('star-rating-area');
     const messageElement = document.getElementById('concierge-message');
+    const continueButtons = document.querySelectorAll('.continue-button'); // Get all continue buttons
 
     let userRating = 0;
 
@@ -19,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const typeMessageWordByWord = (element, text, onComplete) => {
         const words = text.split(' ');
         let wordIndex = 0;
-        element.innerHTML = '<span class="cursor"></span>'; // Start with a cursor
+        element.innerHTML = '<span class="cursor"></span>';
 
         const typeWord = () => {
             if (wordIndex < words.length) {
@@ -27,24 +28,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 wordIndex++;
                 setTimeout(typeWord, 150);
             } else {
-                element.innerHTML = text; // Typing finished
+                element.innerHTML = text;
                 if (onComplete) onComplete();
             }
         };
         typeWord();
     };
 
-    // --- Star Rating Logic (with Navigation) ---
+    // --- Star Rating Logic ---
     const updateStars = (rating) => {
         stars.forEach(star => {
             const starValue = parseInt(star.dataset.value);
-            if (starValue <= rating) {
-                star.classList.add('hovered');
-                star.textContent = '★'; // Filled star
-            } else {
-                star.classList.remove('hovered');
-                star.textContent = '☆'; // Outline star
-            }
+            star.classList.toggle('hovered', starValue <= rating);
+            star.textContent = starValue <= rating ? '★' : '☆';
         });
     };
 
@@ -59,35 +55,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
         star.addEventListener('click', () => {
             userRating = parseInt(star.dataset.value);
-            
-            stars.forEach(s => {
-                s.classList.remove('selected');
-                if (parseInt(s.dataset.value) <= userRating) {
-                    s.classList.add('selected');
-                }
-            });
-            
             updateStars(userRating);
-
-            // THIS IS THE CRITICAL FIX: Navigate to the next screen after a short delay
             setTimeout(() => {
                 if (userRating >= 4) {
-                    // Go to positive feedback screen
                     goToScreen('screen-2-positive');
                 } else {
-                    // Go to negative/neutral feedback screen
                     goToScreen('screen-2-negative');
                 }
-            }, 400); // 400ms delay for a smooth transition
+            }, 400);
         });
     });
 
+    // --- CRITICAL FIX: Add event listeners for Continue buttons ---
+    continueButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Check the original rating to decide which screen 3 to show
+            if (userRating >= 4) {
+                goToScreen('screen-3-positive');
+            } else {
+                goToScreen('screen-3-negative');
+            }
+        });
+    });
 
     // --- Initial Pathway Flow ---
     const startConciergeFlow = () => {
-        goToScreen('screen-1'); // Ensure we start on the first screen
+        goToScreen('screen-1');
         const welcomeMessage = "Hi! I'm Alex, your digital concierge. Your feedback helps us improve.";
-
         setTimeout(() => {
             typeMessageWordByWord(messageElement, welcomeMessage, () => {
                 starRatingArea.classList.remove('hidden');
