@@ -3,8 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const stars = document.querySelectorAll('.star');
     const starRatingArea = document.getElementById('star-rating-area');
     const messageElement = document.getElementById('concierge-message');
-    // CORRECTED: Select the new button class
-    const continueButtons = document.querySelectorAll('.continue-button-2');
+    const continueButtons = document.querySelectorAll('.continue-button');
 
     let userRating = 0;
 
@@ -42,12 +41,8 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     stars.forEach(star => {
-        star.addEventListener('mouseover', () => {
-            updateStars(parseInt(star.dataset.value));
-        });
-        star.addEventListener('mouseout', () => {
-            updateStars(userRating);
-        });
+        star.addEventListener('mouseover', () => updateStars(parseInt(star.dataset.value)));
+        star.addEventListener('mouseout', () => updateStars(userRating));
         star.addEventListener('click', () => {
             userRating = parseInt(star.dataset.value);
             updateStars(userRating);
@@ -61,7 +56,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // This now correctly finds the new buttons
     continueButtons.forEach(button => {
         button.addEventListener('click', () => {
             if (userRating >= 4) {
